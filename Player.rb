@@ -46,7 +46,7 @@ class Player
   end
 
   def discard(rank, suit)
-
+    
   end
 
   def rank_dis

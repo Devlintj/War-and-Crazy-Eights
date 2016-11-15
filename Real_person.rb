@@ -18,6 +18,9 @@ class Real_person < Player
       draw(player, deck)
     elsif type == "discard"
       puts "rank of card?"
+    elsif type == "rank"
+
+    elsif type == "suit"
 
     end
   end
