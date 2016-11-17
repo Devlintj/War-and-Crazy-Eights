@@ -57,5 +57,9 @@ class GameWindow < Gosu::Window
   end
 end
 
+
+sound = Gosu::Sample.new("media/sound.wav")
+sound.play(1, 1, true)
+
 window = GameWindow.new
 window.show
