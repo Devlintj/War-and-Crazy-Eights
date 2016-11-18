@@ -6,6 +6,7 @@ class Player
     @beep = Gosu::Sample.new("media/beep.wav")
     @x = @y = @vel_x = @vel_y = @angle = 0.0
     @score = 0
+    @lives = 3
   end
 
   def warp(x, y)
@@ -28,8 +29,8 @@ class Player
   def move
     @x += @vel_x
     @y += @vel_y
-    @x %= 640
-    @y %= 480
+    @x %= 1280
+    @y %= 960
 
     @vel_x *= 0.95
     @vel_y *= 0.95
@@ -45,11 +46,17 @@ class Player
 
   def collect_stars(stars)
     if stars.reject! {|star| Gosu::distance(@x, @y, star.x, star.y) < 35 } then
-      @score +=1
+      @score += 1
       @beep.play
       true
     else
       false
+    end
+  end
+
+  def take_damage(enemies)
+    if enemies.reject! {|enemies| Gosu::distance(@x, @y, enemies.x, enemies.y) < 50 } then
+      @lives -= 1
     end
   end
 end

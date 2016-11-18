@@ -1,8 +1,8 @@
 require './Player'
 
 class Enemies < Player
-  def initialize
-    enemies []
+  def initialize(x)
+    enemies = []
     rick1 = Gosu::Image.new("media/rick/rick1.jpg")
     rick2 = Gosu::Image.new("media/rick/rick2.jpg")
     rick3 = Gosu::Image.new("media/rick/rick3.jpg")
@@ -12,7 +12,7 @@ class Enemies < Player
     rick7 = Gosu::Image.new("media/rick/rick7.jpg")
     rick8 = Gosu::Image.new("media/rick/rick8.jpg")
     rick9 = Gosu::Image.new("media/rick/rick9.jpg")
-    rick10 = Gosu::Image.new("media/rick/rick10.jpg")
+    rick10 = Gosu::Image.new("media/rick/rick10.png")
     rick11 = Gosu::Image.new("media/rick/rick11.jpg")
     rick12 = Gosu::Image.new("media/rick/rick12.jpg")
     rick13 = Gosu::Image.new("media/rick/rick13.jpg")
@@ -32,3 +32,22 @@ class Enemies < Player
     enemies.push(rick13)
     enemies.push(rick14)
     @image = enemies[rand(enemies.length)]
+
+    @x = x
+    @y = @vel_x = @vel_y = @angle = 0.0
+  end
+
+  def draw
+    @image.draw_rot(@x, @y, 1, @angle)
+  end
+
+  def move
+    @x += @vel_x
+    @y += @vel_y
+    @x %= 1280
+    @y %= 960
+
+    @vel_x *= 0.4
+    @vel_y *= 0.4
+  end
+end
