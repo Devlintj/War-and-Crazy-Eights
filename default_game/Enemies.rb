@@ -1,7 +1,10 @@
 require './Player'
 
 class Enemies < Player
-  def initialize(x)
+
+  attr_reader :x, :y
+
+  def initialize
     enemies = []
     rick1 = Gosu::Image.new("media/rick/rick1.jpg")
     rick2 = Gosu::Image.new("media/rick/rick2.jpg")
@@ -33,12 +36,10 @@ class Enemies < Player
     enemies.push(rick14)
     @image = enemies[rand(enemies.length)]
 
-    @x = x
+    @x = rand * 1280
     @y = @vel_x = @vel_y = @angle = 0.0
-  end
 
-  def draw
-    @image.draw_rot(@x, @y, 1, @angle)
+    @lives = rand(3) + 1
   end
 
   def move

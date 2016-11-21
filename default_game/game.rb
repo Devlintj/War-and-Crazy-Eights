@@ -5,6 +5,7 @@ require "./Player"
 require "./ZOrder"
 require "./Star"
 require "./Enemies"
+require "./Health"
 
 
 class GameWindow < Gosu::Window
@@ -23,6 +24,10 @@ class GameWindow < Gosu::Window
 
     @enemies = Array.new
 
+    @health = Array.new
+
+    @laser = Array.new
+
     @font = Gosu::Font.new(20)
   end
 
@@ -40,6 +45,7 @@ class GameWindow < Gosu::Window
     end
     @player.move
     @player.collect_stars(@stars)
+    @player.collect_health(@health)
     @player.take_damage(@enemies)
 
     if rand(100) < 4 and @stars.size < 25 then
@@ -47,16 +53,28 @@ class GameWindow < Gosu::Window
     end
 
     if rand(1000) < 10 and @enemies.size < 10 then
-      @enemies.push(Enemies.new(rand(1280)))
+      @enemies.push(Enemies.new)
     end
+
+    if rand(10000) < 10 and @health.size < 5 then
+      @health.push(Health.new)
+    end
+
+    # if Gosu 
 
     @enemies.each {|enemies| enemies.accelerate}
     @enemies.each {|enemies| enemies.move}
+
+    @laser.each {|laser| laser.accelerate}
+    @laser.each {|laser| laser.move}
+
+    death
   end
 
   def draw
     @player.draw
     @enemies.each {|enemies| enemies.draw }
+    @health.each {|health| health.draw}
     @background_image.draw(0,0,0)
     @stars.each { |star| star.draw}
     @font.draw("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
@@ -65,6 +83,12 @@ class GameWindow < Gosu::Window
 
   def button_down(id)
     if id == Gosu::KbEscape
+      close
+    end
+  end
+
+  def death
+    if @player.lives < 1
       close
     end
   end
