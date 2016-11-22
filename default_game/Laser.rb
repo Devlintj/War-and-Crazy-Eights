@@ -6,9 +6,13 @@ class Laser
     @image = Gosu::Image.new("media/laser.jpg")
     @x = x
     @y = y
-    @vel_x = vel_x
-    @vel_y = vel_y
+    @vel_x = 0
+    @vel_y = 0
     @angle = angle
+  end
+
+  def draw
+    @image.draw_rot(@x, @y, 1, @angle)
   end
 
   def accelerate
@@ -20,10 +24,15 @@ class Laser
     @x += @vel_x
     @y += @vel_y
 
-    if @y > 960 || @y < 0 || @x > 1280 || @x < 0
-      reject
-    end
-
-    @vel_x *= 0.95
-    @vel_y *= 0.95
+    @vel_x *= 1.05
+    @vel_y *= 1.05
   end
+
+  def hit_wall?(laser)
+    if laser.reject!{|laser| laser.x > 1280 || laser.x < 0 || laser.y > 960 || laser.y < 0} then
+      true
+    else
+      false
+    end
+  end
+end

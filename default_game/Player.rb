@@ -9,6 +9,8 @@ class Player
     @lives = 5
   end
 
+  attr_accessor :x, :y, :angle, :score, :lives
+
   def warp(x, y)
     @x, @y = x, y
   end
@@ -38,14 +40,6 @@ class Player
 
   def draw
     @image.draw_rot(@x, @y, 1, @angle)
-  end
-
-  def score
-    @score
-  end
-
-  def lives
-    @lives
   end
 
   def collect_stars(stars)

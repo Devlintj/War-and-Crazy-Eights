@@ -6,6 +6,7 @@ require "./ZOrder"
 require "./Star"
 require "./Enemies"
 require "./Health"
+require "./Laser"
 
 
 class GameWindow < Gosu::Window
@@ -27,6 +28,8 @@ class GameWindow < Gosu::Window
     @health = Array.new
 
     @laser = Array.new
+
+    @laser_counter = 1
 
     @font = Gosu::Font.new(20)
   end
@@ -60,13 +63,25 @@ class GameWindow < Gosu::Window
       @health.push(Health.new)
     end
 
-    # if Gosu 
+    if Gosu::button_down? Gosu::KbSpace
+      if @laser_counter == 0
+        @laser.push(Laser.new(@player.x, @player.y, @player.angle))
+        @laser_counter = 1
+      end
+    end
+
+    if !Gosu::button_down? Gosu::KbSpace
+      if @laser_counter == 1
+        @laser_counter = 0
+      end
+    end
 
     @enemies.each {|enemies| enemies.accelerate}
     @enemies.each {|enemies| enemies.move}
 
     @laser.each {|laser| laser.accelerate}
     @laser.each {|laser| laser.move}
+    @laser.each {|laser| laser.hit_wall?(@laser)}
 
     death
   end
@@ -75,6 +90,7 @@ class GameWindow < Gosu::Window
     @player.draw
     @enemies.each {|enemies| enemies.draw }
     @health.each {|health| health.draw}
+    @laser.each {|laser| laser.draw}
     @background_image.draw(0,0,0)
     @stars.each { |star| star.draw}
     @font.draw("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
