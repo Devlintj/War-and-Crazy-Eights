@@ -45,16 +45,12 @@ class Player
     deck.deal(player)
   end
 
-  def discard(rank, suit)
-    
-  end
-
-  def rank_dis
-
-  end
-
-  def suit_dis
-
+  def check_card(rank, suit, face_up)
+    hand.each do |card|
+      if card.rank == rank && card.suit == suit && face_up[0].suit == card.suit
+        ##need to finish this 
+      end
+    end
   end
 
   def throw_card

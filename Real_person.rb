@@ -18,10 +18,12 @@ class Real_person < Player
       draw(player, deck)
     elsif type == "discard"
       puts "rank of card?"
-    elsif type == "rank"
-
-    elsif type == "suit"
-
+      $stdout.flush
+      rank = scan.downcase
+      puts "suit?"
+      $stdout.flush
+      suit = scan.downcase
+      player.check_card(rank, suit, player.face_up)
     end
   end
 
