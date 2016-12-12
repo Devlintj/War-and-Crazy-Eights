@@ -61,12 +61,38 @@ class Player
         face_up.unshift(hand[card_num])
         hand.delete_at(card_num)
         check = 1
-      elsif card.rank == rank && card.rank = '8'
+      elsif card.rank == rank && card.rank == '8'
         face_up.unshift(hand[card_num])
         hand.delete_at(card_num)
         check = 1
       end
       card_num += 1
+    end
+  end
+
+  def ai_logic(player, deck)
+    neat_info_hand
+    $stdout.flush
+    suit = face_up[0].suit
+    rank = face_up[0].rank
+    card_num = 0
+    works = false
+    hand.each do |card|
+      if card.suit == suit
+        check_card(hand[card_num].rank, hand[card_num].suit, face_up)
+        works = true
+      elsif card.rank == rank
+        check_card(hand[card_num].rank, hand[card_num].suit, face_up)
+        works = true
+      elsif card.rank == "8"
+        check_card(hand[card_num].rank, hand[card_num].suit, face_up)
+        works = true
+      end
+      card_num +=1
+    end
+    if works == false
+      draw(player, deck)
+      ai_logic
     end
   end
 end
