@@ -45,15 +45,28 @@ class Player
     deck.deal(player)
   end
 
-  def check_card(rank, suit, face_up)
-    hand.each do |card|
-      if card.rank == rank && card.suit == suit && face_up[0].suit == card.suit
-        ##need to finish this 
-      end
-    end
+  def face_up_update(opponent)
+    face_up.unshift(opponent.face_up[0])
   end
 
-  def throw_card
-
+  def check_card(rank, suit, face_up)
+    check = 0
+    card_num = 0
+    hand.each do |card|
+      if card.rank == rank && card.suit == suit && face_up[0].suit == card.suit
+        face_up.unshift(hand[card_num])
+        hand.delete_at(card_num)
+        check = 1
+      elsif card.rank == rank && card.suit == suit && face_up[0].rank == card.rank
+        face_up.unshift(hand[card_num])
+        hand.delete_at(card_num)
+        check = 1
+      elsif card.rank == rank && card.rank = '8'
+        face_up.unshift(hand[card_num])
+        hand.delete_at(card_num)
+        check = 1
+      end
+      card_num += 1
+    end
   end
 end

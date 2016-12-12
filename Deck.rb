@@ -16,7 +16,7 @@ class Deck
 
   def standard
     rank = ['1', '2', '3', '4', '5', '6',
-            '7', '8', '9', '10', 'Jack', 'Queen', 'King']
+            '7', '8', '9', '10', 'jack', 'queen', 'king']
     suite = ['spades', 'clubs', 'hearts', 'diamonds']
     cards = []
     13.times do |n|
